@@ -39,10 +39,10 @@ def main():
     max_iterations = 1000
 
     # get the integrals
-    Suv = mol_h2o.intor('int1e_ovlp')  #Overlap Integrals
-    Tuv = mol_h2o.intor('int1e_kin')   #Kinetic Energy 1 electron integrals
-    Vuv = mol_h2o.intor('int1e_nuc')   #Nuclear Repulsion 1 electron integrals
-    eri = mol_h2o.intor("int2e")       #Electron Repulsion 2 electron integrals
+    Suv = mol_h2o.intor('int1e_ovlp')  # Overlap Integrals
+    Tuv = mol_h2o.intor('int1e_kin')  # Kinetic Energy 1 electron integrals
+    Vuv = mol_h2o.intor('int1e_nuc')  # Nuclear Repulsion 1 electron integrals
+    eri = mol_h2o.intor("int2e")  # Electron Repulsion 2 electron integrals
 
     """
     Main SCF Procedure
