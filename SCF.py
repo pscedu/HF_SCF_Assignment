@@ -22,7 +22,7 @@ def calc_nuclear_repulsion_energy(mol_):
     charges = mol_.atom_charges()
     coords = mol_.atom_coords()
     Enuc = 0
-    distance_matrix = np.zeros((3,3),dtype=np.double)
+    distance_matrix = np.zeros((3, 3), dtype=np.double)
 
     """
     Replace with your implementation
@@ -79,9 +79,9 @@ def calc_initial_density(mol_):
     return Duv
 
 
-def calc_hcore(Tuv_, Vuv_):
+def calc_hcore_matrix(Tuv_, Vuv_):
     """
-    calc_hcore - Computes the 1 electron core matrix
+    calc_hcore_matrix - Computes the 1 electron core matrix
 
     Arguments:
         Tuv_: The Kinetic Energy 1e integral matrix
@@ -180,7 +180,7 @@ def form_density_matrix(mol_, mo_coeffs_):
     """
 
     nelec = mol_.nelec[0]
-    Duv = np.zeros(mol_.nao,mol_.nao, dtype=np.double)
+    Duv = np.zeros(mol_.nao, mol_.nao, dtype=np.double)
 
     """
     Replace with your implementation
@@ -191,6 +191,7 @@ def form_density_matrix(mol_, mo_coeffs_):
     """
 
     return Duv
+
 
 def calc_total_energy(Fuv_, Huv_, Duv_, Enuc):
     """
