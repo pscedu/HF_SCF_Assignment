@@ -28,15 +28,20 @@ To complete the assignment:
 2. Clone your forked repository
 3. Go into your new directory and create a virtualenv with he command
 
->`python -m venv ./venv`
-
+```bash
+python -m venv ./venv
+```
 4. Activate your new virtual environment
 
->`source ./venv/bin/activate`
+```bash
+source ./venv/bin/activate`
+```
 
 5. Install the necessary modules
 
->`pip install -r requirements.txt`
+```bash
+pip install -r requirements.txt
+```
 
 6. Now you are ready to start programming. There are two python files.
 
@@ -127,8 +132,8 @@ As we perform the iterative SCF procedure, we need criteria to indicate that we 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\mathrm{rms}_\mathbf{D} = \left[ \sum_{\mu \nu} (D_{\mu \nu}^t - D_{\mu \nu}^{t-1})^2 \right]^{-1/2} < \delta_2">
 </p>
- 
-### Step 1. Calculate the Electron Nuclear Repulsion Energy
+
+#### Step 1. Calculate the Electron Nuclear Repulsion Energy
 
 *Function Stub*: `calc_nuclear_repulsion_energy`
 
@@ -138,9 +143,115 @@ The Nuclear Repulsion energy is function of the charge and positions of the atom
 <img src="https://render.githubusercontent.com/render/math?math=E_\mathrm{nuc} = \sum_{B > A} \sum_{A} \frac{Z_A Z_B}{R_{AB}}">
 </p>
 
-where A and B are atoms in the molecule.
+where A and B are atoms in the molecule. First compute the distance between two points with the NumPy function `np.linalg.norm` ([api doc here](https://numpy.org/doc/stable/reference/generated/numpy.linalg.norm.html)), and then perform the summation loop to compute the E<sub>nuc</sub>.
 
+Hint: Your function should return `8.00236706181077`
 
+#### Step 2. Calculate the Initial H<sub>core</sub> Matrix
+
+*Function Stub*: `calc_hcore_matrix`
+
+H<sub>core</sub> is termed the *Core Hamiltonian* matrix and it is the simple sum of the 1-electron integrals:
+
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=H_{\mu \nu}^\mathrm{core} = T_{\mu \nu} + V_{\mu \nu}">
+</p>
+
+Hint:
+
+```python
+Huv[0,0] = -32.57739541261037
+Huv[3,4] = Huv[4,3] = 0.0
+```
+
+#### Step 3. Calculate the Initial Density Matrix
+*Function Stub*: `calc_initial_density`
+
+There are many ways to make an initial guess at the density matrix for the HF-SCF procedure. In our case, we will start with a density matrix that is just filled with zeros which will essentially use the Core Hamiltonian as the initial guess.
+
+This function is provided for later enhancements where you may want to try other density matrix guesses, such as random. For now, this should return a matrix with the appropriate dimentions (number of atomic orbitals X number of atomic orbitals) filled with double precision 0s.
+
+#### Step 4. Start the SCF Procedure
+
+Here we begin the iterative process of solving the HF equations, calculating the total energy of the molecule, and forming an updated density matrix.
+
+The HF Equations take the form of the eigenvector matrix Roothaan Equations:
+
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{F} \mathbf{C} = \mathbf{S} \mathbf{C} \boldsymbol{\varepsilon}">
+</p>
+
+Where **F** is known as the Fock Matrix.
+
+##### Step 5a. Calculate the Fock Matrix
+
+*Function Stub*: `calc_fock_matrix`
+
+The Fock Matrix is formed through the following equation:
+
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=F_{\mu \nu} = H_{\mu \nu}^\mathrm{core} + \sum_{\kappa \lambda} D_{\kappa \lambda} \big[ (\mu \nu | \kappa \lambda) - \frac{1}{2} (\mu \kappa | \nu \lambda) \big]">
+</p>
+
+F<sub>uv</sub> is the Fock Matrix
+
+H<sup>core</sup><sub>uv</sub> is the Core Hamiltonian Matrix from Step 2.
+
+D<sub>uv</sub> is the Density Matrix from Step 3
+
+The terms that include <img src="https://render.githubusercontent.com/render/math?math=(\mu \nu | \kappa \lambda)">, these are the electron repulsion integrals, `eri`. This intergral would be equivalent to eri[&mu;,&nu;,&kappa;&lambda;].
+
+Now let's look at the two terms within the square brackets.
+
+The first term:  <img src="https://render.githubusercontent.com/render/math?math=\sum_{\kappa \lambda} D_{\kappa \lambda} (\mu \nu | \kappa \lambda)"> is the Coulomb term and represents the classical analogue to the Coulomb force between two charged particles.
+
+This term could be implemented with a four-fold loop, but you should look at how you can use the `sum()` aggregator to do it with just a loop over &mu; and &nu; For example, if I wanted to calculate this term's contribution to the Fock Matrix element [0,0], you could use:
+
+```python
+(Duv*eri[0,0]).sum()
+```
+which would be equivalent to:
+
+```python
+for k in range(nao):
+  for l in range(nao):
+    Fuv[0,0] += Duv[k,l]*eri[0,0,k,l]}
+```
+
+The second term: <img src="https://render.githubusercontent.com/render/math?math=\sum_{\kappa \lambda} D_{\kappa \lambda} (\mu \kappa | \nu \lambda)">, is the Exchange Term and has no classical analogue. It is a result of the Pauli principle in electrons of the same spin avoid each other.
+
+Similarly to the Coulomb Term, this can be calculated as a four-fold loop over atomic orbitals, but could also be calculated through aggregation. For the contribution of this term to the Fock Matrix element [0,0]:
+
+```python
+-(Duv*eri[0,:,0]).sum()
+```
+
+would be equivalent to:
+
+```python
+for k in range(nao):
+  for l in range(nao):
+    Fuv[0,0] -= Duv[k,l]*eri(0,k,0,l)
+```
+
+Hint:
+For the first iteration:
+```python
+  Fuv[0,0] = -32.57739541261037
+  Fuv[2,5] = Fuv[5,2] = -1.6751501447185015
+```
+
+For the second iteration:
+```python
+  Fuv[0,0] = -18.81326949992384
+  Fuv[2,5] = Fuv[5,2] = -0.1708886336992761
+```
+##### Step 5b. Solve Eigenvalues and Eigenvectors of Roothan Equations
+##### Step 5c. Calculate the Total Energy of the Current Iteration
+##### Step 5d. Calculate the new Density Matrix
+##### Step 5e. Calculate the Energy Difference and RMS Difference of Density
+##### Step 5f. Check for Convergence, if Converged, Exit
+##### Step 5g. If not Converged, update Density Matrix and Energy and do another iteration
 ## References
 
 1. [Programming Tutorial in Chemistry by Python](https://pycrawfordprogproj.readthedocs.io/en/latest/index.html), Daniel Crawford.
