@@ -195,7 +195,9 @@ Here we begin the iterative process of solving the HF equations, calculating the
 The HF Equations take the form of the eigenvector matrix Roothaan Equations:
 
 <p align="center">
-<img src="https://latex.codecogs.com/gif.latex?\mathbf{F} \mathbf{C} = \mathbf{S} \mathbf{C} \boldsymbol{\varepsilon}">
+<img src="https://latex.codecogs.com/gif.latex?%5Cmathbf%7BF%7D%20%5Cmathbf%7BC%7D%20%3D%20%5Cmathbf%7BS%7D%20%5Cmathbf%7BC%7D%20%5Cboldsymbol%7B%5Cvarepsilon%7D">
+
+<!--\mathbf{F} \mathbf{C} = \mathbf{S} \mathbf{C} \boldsymbol{\varepsilon}-->
 </p>
 
 Where **F** is known as the Fock Matrix.
