@@ -92,7 +92,10 @@ All three of the matrices below are two-dimensional matrices with the dimensions
 - S<sub>uv</sub>: The Overlap matrix
 
 <p align="center">
-<img src="http://www.sciweavers.org/tex2img.php?eq=S_{\mu \nu} = \int \phi_\mu (\boldsymbol{r}) \phi_\nu (\boldsymbol{r}) \, \mathrm{d} \boldsymbol{r}">
+<img src="https://latex.codecogs.com/svg.latex?S_%7B%5Cmu%20%5Cnu%7D%20%3D%20%5Cint%20%5Cphi_%5Cmu%20%28%5Cboldsymbol%7Br%7D%29%20%5Cphi_%5Cnu%20%28%5Cboldsymbol%7Br%7D%29%20%5C%2C%20%5Cmathrm%7Bd%7D%20%5Cboldsymbol%7Br%7D">
+
+<!--S_{\mu \nu} = \int \phi_\mu (\boldsymbol{r}) \phi_\nu (\boldsymbol{r}) \, \mathrm{d} \boldsymbol{r}">
+-->
 </p>
 
 - T<sub>uv</sub>: The Kinetic Integral Matrix
