@@ -92,7 +92,7 @@ All three of the matrices below are two-dimensional matrices with the dimensions
 - S<sub>uv</sub>: The Overlap matrix
 
 <p align="center">
-<img src="https://latex.codecogs.com/gif.latex?S_{\mu \nu} = \int \phi_\mu (\boldsymbol{r}) \phi_\nu (\boldsymbol{r}) \, \mathrm{d} \boldsymbol{r}">
+<img src="http://www.sciweavers.org/tex2img.php?eq=S_{\mu \nu} = \int \phi_\mu (\boldsymbol{r}) \phi_\nu (\boldsymbol{r}) \, \mathrm{d} \boldsymbol{r}">
 </p>
 
 - T<sub>uv</sub>: The Kinetic Integral Matrix
@@ -361,6 +361,11 @@ This operation is already done in `main.py` and you do not need to implement.
 ### Final Answer
 
 The final total energy should be: `-74.94207992819234` after 25 iterations.
+
+#### Getting Help
+
+If you have any issues or questions, please submit to the [Issues page](https://github.com/CMU-MS-DAS-Modern-Programming-Mini/HF_SCF_Assignment/issues) of the main repository.
+
 ## References
 
 1. [Programming Tutorial in Chemistry by Python](https://pycrawfordprogproj.readthedocs.io/en/latest/index.html), Daniel Crawford.
