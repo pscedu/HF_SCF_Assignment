@@ -67,7 +67,6 @@ def main():
     """
 
     Enuc = SCF.calc_nuclear_repulsion_energy(mol_h2o)
-    # s_half = SCF.calc_shalf(Suv)
     Huv = SCF.calc_hcore_matrix(Tuv, Vuv)
     Duv = SCF.calc_initial_density(mol_h2o)
     Etot = 0.0

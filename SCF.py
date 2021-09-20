@@ -34,29 +34,6 @@ def calc_nuclear_repulsion_energy(mol_):
     return Enuc
 
 
-def calc_shalf(Suv_):
-    """
-    calc_shalf - Calculates the Orthogonality Matrix from the Overlap
-
-    Arguents:
-        Suv_ : The (mol.nao x mol.nao) overlap Matrix
-
-    Returns:
-        s_half: The (mol.nao x mol.nao) Orthogonality Matrix
-    """
-
-    """
-    Replace with your implementation
-
-    Step 1. Take the factional matrix power of Suv to -(1.0/2.0)
-
-    Hint: There is a SciPy function in the scipy.linalg library that does this.
-          Do not just take the matrix to the power of -1/2, that is not correct.
-    """
-
-    return s_half
-
-
 def calc_initial_density(mol_):
     """
     calc_initial_density - Function to calculate the initial guess density
@@ -68,6 +45,7 @@ def calc_initial_density(mol_):
         Duv: the (mol.nao x mol.nao) Guess Density Matrix
     """
 
+    nao = mol_.nao
     """
     Replace with your implementation
 
