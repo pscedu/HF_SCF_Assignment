@@ -397,7 +397,7 @@ This operation is already done in `main.py` and you do not need to implement.
 
 ### Final Answer
 
-The final total energy should be: `-74.94207992819234` after 25 iterations.
+The final total energy should be: `-74.9420799282` after 25 iterations.
 
 #### Getting Help
 

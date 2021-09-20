@@ -157,7 +157,8 @@ def form_density_matrix(mol_, mo_coeffs_):
         Duv: the density matrix
     """
 
-    nelec = mol_.nelec[0]
+    nelec = mol_.nelec[0]  # Number of occupied orbitals
+    num_aos = mol_.nao  # Number of atomic orbitals, dimensions of the mats
     Duv = np.zeros(mol_.nao, mol_.nao, dtype=np.double)
 
     """
@@ -171,7 +172,7 @@ def form_density_matrix(mol_, mo_coeffs_):
     return Duv
 
 
-def calc_total_energy(Fuv_, Huv_, Duv_, Enuc):
+def calc_total_energy(Fuv_, Huv_, Duv_, Enuc_):
     """
     calc_total_energy - This function calculates the total energy of the
     molecular system

@@ -82,7 +82,7 @@ def main():
         dDuv = (((Duv_new - Duv)**2).sum())**(1.0/2.0)
 
         if dEtot < E_conv_threshold and dDuv < D_conv_threshold:
-            print("Final Energy = {}".format(Etot_new))
+            print("Final Energy = {:.10f}".format(Etot_new))
             break
 
         print("Etot = {:.10f} dEtot = {:.10f} dDuv = {:.10f}".format(Etot_new,
