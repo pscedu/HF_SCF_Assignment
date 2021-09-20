@@ -45,7 +45,7 @@ def calc_initial_density(mol_):
         Duv: the (mol.nao x mol.nao) Guess Density Matrix
     """
 
-    nao = mol_.nao
+    num_aos = mol_.nao  # Number of atomic orbitals, dimensions of the mats
     """
     Replace with your implementation
 
@@ -139,7 +139,7 @@ def solve_Roothan_equations(Fuv_, Suv_):
     function and you can implement this in one line.
     """
 
-    return mo_energies, mo_coeffs
+    return mo_energies.real, mo_coeffs.real
 
 
 def form_density_matrix(mol_, mo_coeffs_):
