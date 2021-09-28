@@ -39,17 +39,24 @@ class mol:
             instance of mol
         """
         self.nao = nao_
-        self.nelec = nelect_
+        self.nelec = [nelect_, nelect_]
         self.nmo = nmo_
         self.charges = []
-        self.coords = []
+        coords_list = []
         atom_list = atom_string_.split(";")
         for a in atom_list:
-            print(a)
-            self.charges.append(int(a.split(" ")[0]))
-            self.coords.append([float(a.split(" ")[1]),
-                                float(a.split(" ")[2]),
-                                float(a.split(" ")[3])])
+            print(a.split()[2])
+            self.charges.append(int(a.split()[0]))
+            coords_list.append([float(a.split()[1]),
+                                float(a.split()[2]),
+                                float(a.split()[3])])
+        self.coords = np.array(coords_list)
+
+    def atom_charges(self):
+        return self.charges
+
+    def atom_coords(self):
+        return self.coords
 
 
 def main():
@@ -113,7 +120,7 @@ def main():
 
         mo_e, mo_c = SCF.solve_Roothan_equations(Fuv, Suv)
 
-        Etot_new = SCF.calc_tot_energy(Fuv, Huv, Duv, Enuc)
+        Etot_new = SCF.calc_total_energy(Fuv, Huv, Duv, Enuc)
 
         Duv_new = SCF.form_density_matrix(mol_h2o, mo_c)
 
@@ -124,12 +131,12 @@ def main():
             print("Final Energy = {:.10f}".format(Etot_new))
             break
 
-            print("Etot = {:.10f} dEtot = {:.10f} dDuv = {:.10f}".format(Etot_new,
-                                                                         dEtot,
-                                                                         dDuv))
-            Duv = Duv_new.copy()
-            Etot = Etot_new
+        print("Etot = {:.10f} dEtot = {:.10f} dDuv = {:.10f}".format(Etot_new,
+                                                                     dEtot,
+                                                                     dDuv))
+        Duv = Duv_new.copy()
+        Etot = Etot_new
 
-            if __name__ == "__main__":
-                main()
-                main()
+
+if __name__ == "__main__":
+    main()
